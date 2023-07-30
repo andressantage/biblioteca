@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['correo'])){
+    header('Location: ../index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,7 +30,7 @@
         box-sizing: border-box;
     }
     body{
-      background-color: black; 
+      background-color: white; 
     }
     .visualizar{
         width: 100%;
@@ -195,7 +202,7 @@
 <body>
 
 <!-- barra de navegacion -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark py-1">
+<nav class="navbar navbar-expand-lg navbar-dark bg-warning py-1">
   <a class="navbar-brand" href="#">
       <img class="imgLogo" src="https://cdn.pixabay.com/photo/2017/01/31/15/33/linux-2025130_1280.png" alt="">
       Administrador
@@ -384,14 +391,14 @@
               </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="crearUsuario.php">
+                <form method="POST" action="back/registrar_usuario.php">
                     <div class="form-group  text-white">
                       <label for="nombre">Nombres</label>
-                      <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa nombres">
+                      <input type="text" class="form-control" name="nombres" id="nombre" placeholder="Ingresa nombres">
                     </div>
                     <div class="form-group  text-white">
                       <label for="apellido">Apellidos</label>
-                      <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingresa apellidos">
+                      <input type="text" class="form-control" name="apellidos" id="apellido" placeholder="Ingresa apellidos">
                     </div>
                     <div class="form-group  text-white">
                       <label for="email">Correo electrónico</label>
@@ -421,27 +428,19 @@
 
 <!-- seccion buscador -->
 <div class="container mt-4">
-  <div class="row d-flex justify-content-center">
-      <div class="col-md-6">
-      <div class="input-group mb-3">
-        <button class="btn btn-dark" id="buscar" type="button">Buscar usuario por: </button>
-        <select class="form-select" aria-label="Opcion" name="opcion" id="opcion">
-          <option selected>Opcion</option>
-          <option value="opcion1">Nombre</option>
-          <option value="opcion2">Cedula</option>
-          <option value="opcion3">Llave saber</option>
-      </select>
-          <input style="width: 180px;" id="buscarImagen" type="text" class="form-control" placeholder="Buscar...">
-          <button class="btn btn-dark" id="buscar" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-              <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-          </svg>
-          </button>
-      </div>
-      </div>
-  </div>
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-6">
+        <div class="input-group mb-3">
+            <input id="buscarImagen" type="text" class="form-control" placeholder="Buscar...">
+            <button class="btn btn-dark" id="buscar" type="button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+            </svg>
+            </button>
+        </div>
+        </div>
+    </div>
 </div>
-
 
 <!-- muestra imagenes -->
 <div id="api" class="contenedor row d-flex justify-content-center align-items-center">
@@ -565,110 +564,61 @@
           <th scope="col">Cedula</th>
           <th scope="col">Nombre</th>
           <th scope="col">Apellido</th>
+          <th scope="col">Correo</th>
           <th scope="col">Llave saber</th>
           <th scope="col">Accion</th>
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <th scope="row">1095316</th>
-          <td>Ricardo</td>
-          <td>Jaramillo</td>
-          <td>456152</td>
-          <td class="text-center">
-            <button class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-            </button>
-            <button class="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1095316</th>
-          <td>Ricardo</td>
-          <td>Jaramillo</td>
-          <td>456152</td>
-          <td class="text-center">
-            <button class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-            </button>
-            <button class="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1095316</th>
-          <td>Ricardo</td>
-          <td>Jaramillo</td>
-          <td>456152</td>
-          <td class="text-center">
-            <button class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-            </button>
-            <button class="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1095316</th>
-          <td>Ricardo</td>
-          <td>Jaramillo</td>
-          <td>456152</td>
-          <td class="text-center">
-            <button class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-            </button>
-            <button class="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <th scope="row">1095316</th>
-          <td>Ricardo</td>
-          <td>Jaramillo</td>
-          <td>456152</td>
-          <td class="text-center">
-            <button class="btn btn-primary">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-              </svg>
-            </button>
-            <button class="btn btn-dark">
-              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-square" viewBox="0 0 16 16">
-                <path d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"/>
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z"/>
-              </svg>
-            </button>
-          </td>
-        </tr>
+<?php
+include("back/conexion.php");
+$con=conectar();
+if (mysqli_connect_errno()) {
+  echo "Error al conectar a la base de datos: " . mysqli_connect_error();
+  exit();
+}
+$consulta = "SELECT * FROM usuarios";
+$resultado = mysqli_query($con, $consulta);
+$usuarios = array();
+while ($fila = mysqli_fetch_assoc($resultado)) {      
+    $usuarios[] = $fila;
+}
+$html='';
+$num=0;
+foreach ($usuarios as $usuario) {
+  /* $nombreCompleto = explode(' ', $usuario['nombres']);
+  $primerNombre = $nombreCompleto[0]; */
+
+  $html .="
+  <tr>
+    <th scope='row'>".$usuario['Cedula']."</th>
+    <td>".$usuario['Nombre']."</td>
+    <td>".$usuario['Apellido']."</td>
+    <td>".$usuario['UsuariosID']."</td>
+    <td class='text-center'>
+    <button class='btn btn-primary'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-pencil' viewBox='0 0 16 16'>
+        <path d='M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z'/>
+        </svg>
+    </button>
+    <button class='btn btn-dark'>
+        <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-x-square' viewBox='0 0 16 16'>
+        <path d='M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z'/>
+        <path d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/>
+        </svg>
+    </button>
+    </td>
+  </tr>
+  ";
+}
+echo $html;
+?>
       </tbody>
     </table>
   </div>
 </div>
+
+
 
 <!-- modal que muestra imagen individual al darle click -->
 <div id="modal1" class="modal1 ">

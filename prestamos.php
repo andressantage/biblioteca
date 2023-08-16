@@ -31,35 +31,36 @@
               </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="crearUsuario.php">
+                <form method="POST" action="back/registrar_usuario.php">
                     <div class="form-group  text-white">
                       <label for="nombre">Nombres</label>
-                      <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa nombres">
+                      <input required type="text" class="form-control" name="nombres" id="nombre" placeholder="Ingresa nombres">
                     </div>
                     <div class="form-group  text-white">
                       <label for="apellido">Apellidos</label>
-                      <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingresa apellidos">
+                      <input required type="text" class="form-control" name="apellidos" id="apellido" placeholder="Ingresa apellidos">
                     </div>
                     <div class="form-group  text-white">
                       <label for="email">Correo electrónico</label>
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa correo electrónico">
+                      <input required type="email" class="form-control" name="email" id="email" placeholder="Ingresa correo electrónico">
                     </div>
                     <div class="form-group  text-white">
                       <label for="cedula">Cedula</label>
-                      <input type="number" class="form-control" name="cedula" id="cedula" placeholder="Ingresa cedula">
+                      <input required type="number" class="form-control" name="cedula" id="cedula" placeholder="Ingresa cedula">
                     </div>
                     <div class="form-group  text-white">
                       <label for="llave">Llave del saber</label>
-                      <input type="number" class="form-control" name="llave" id="llave" placeholder="Ingresa llave del saber">
+                      <input required type="number" class="form-control" name="llave" id="llave" placeholder="Ingresa llave del saber">
                     </div>
-                    <button type="submit" class="btn btn-success">Registrar</button>
                    <!--  <div class="d-flex justify-content-lg-start align-item-center mt-2">
                         <a href="" class="m">¿Has olvidado tú contraseña?</a>
                     </div> -->
-                </form>
+
             </div>
-            <div class="modal-footer">
-            <a href="principal.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
+            <div class="modal-footer justify-content-between">
+              <button type="submit" class="btn btn-success">Registrar</button>
+              </form>
+              <a href="principal.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
               <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
             </div>
           </div>

@@ -31,35 +31,36 @@
               </button>
             </div>
             <div class="modal-body">
-                <form method="POST" action="crearUsuario.php">
+                <form method="POST" action="back/registrar_usuario.php">
                     <div class="form-group  text-white">
                       <label for="nombre">Nombres</label>
-                      <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Ingresa nombres">
+                      <input required type="text" class="form-control" name="nombres" id="nombre" placeholder="Ingresa nombres">
                     </div>
                     <div class="form-group  text-white">
                       <label for="apellido">Apellidos</label>
-                      <input type="text" class="form-control" name="apellido" id="apellido" placeholder="Ingresa apellidos">
+                      <input required type="text" class="form-control" name="apellidos" id="apellido" placeholder="Ingresa apellidos">
                     </div>
                     <div class="form-group  text-white">
                       <label for="email">Correo electrónico</label>
-                      <input type="email" class="form-control" name="email" id="email" placeholder="Ingresa correo electrónico">
+                      <input required type="email" class="form-control" name="email" id="email" placeholder="Ingresa correo electrónico">
                     </div>
                     <div class="form-group  text-white">
                       <label for="cedula">Cedula</label>
-                      <input type="number" class="form-control" name="cedula" id="cedula" placeholder="Ingresa cedula">
+                      <input required type="number" class="form-control" name="cedula" id="cedula" placeholder="Ingresa cedula">
                     </div>
                     <div class="form-group  text-white">
                       <label for="llave">Llave del saber</label>
-                      <input type="number" class="form-control" name="llave" id="llave" placeholder="Ingresa llave del saber">
+                      <input required type="number" class="form-control" name="llave" id="llave" placeholder="Ingresa llave del saber">
                     </div>
-                    <button type="submit" class="btn btn-success">Registrar</button>
                    <!--  <div class="d-flex justify-content-lg-start align-item-center mt-2">
                         <a href="" class="m">¿Has olvidado tú contraseña?</a>
                     </div> -->
-                </form>
+
             </div>
-            <div class="modal-footer">
-            <a href="principal.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
+            <div class="modal-footer justify-content-between">
+              <button type="submit" class="btn btn-success">Registrar</button>
+              </form>
+              <a href="principal.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
               <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
             </div>
           </div>
@@ -100,51 +101,46 @@
 <!-- muestra tarjetas de libros -->
 <div id="api" class="contenedor row d-flex justify-content-center align-items-center">
 
-  <div class="card border-primary mb-3 tarjetas" style="max-width: 18rem;">
-    <div class="card-header">Cien años de soledad</div>
-    <div class="card-body text-primary pb-2">
-      <h5 class="card-title">Gabriel García Márquez</h5>
-      <p class="card-text">Considerada una de las obras más importantes del realismo mágico, "One Hundred Years of Solitude" narra la historia de la familia Buendía a lo largo de varias generaciones en el ficticio pueblo de Macondo. La novela explora temas como el amor, la soledad, la realidad y la fantasía, y ha dejado una huella duradera en la literatura latinoamericana.</p>
-      <a href="#" class="btn btn-primary mb-0" data-toggle="modal" data-target="#exampleModal7">Prestar</a>
+<?php
+include("back/conexion.php");
+$con=conectar();
+if (mysqli_connect_errno()) {
+  echo "Error al conectar a la base de datos: " . mysqli_connect_error();
+  exit();
+}
+$consulta = "SELECT * FROM libros";
+$resultado = mysqli_query($con, $consulta);
+$usuarios = array();
+while ($fila = mysqli_fetch_assoc($resultado)) {      
+    $usuarios[] = $fila;
+}
+$html='';
+$num=0;
+foreach ($usuarios as $usuario) {
+  /* $nombreCompleto = explode(' ', $usuario['nombres']);
+  $primerNombre = $nombreCompleto[0]; */
+  $html .="
+  <div class='card border-primary mb-3 tarjetas' style='max-width: 18rem;'>
+    <div class='card-header'>".$usuario['Autor']."</div>
+    <div class='card-body'>
+        <h5 class='card-title text-primary'>".$usuario['Titulo']."</h5>
+        <pre class='mb-0'>
+Disponibles: <h6 class='mb-0'>".$usuario['N_Disponible']."</h6>
+N° ejemplares: ".$usuario['N_Ejemplares']."
+ID del libro: ".$usuario['LibrosID']."
+Clasificacion ID: ".$usuario['ClasificacionID']."
+Codigo de clasificacion: ".$usuario['CodigoClasificacion']."
+Biblioteca:".$usuario['BibliotecaID']."
+Sala: ".$usuario['SalaID']."
+        </pre>
+        <a href='#' class='btn btn-primary' data-toggle='modal' data-target='#exampleModal7'>Prestar</a>
     </div>
-    <div class="card-header mt-0">Disponibles: 5</div>
   </div>
-  
-  <div class="card border-primary mb-3 tarjetas" style="max-width: 18rem;">
-    <div class="card-header">La esperanza de 1984"</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">George Orwell</h5>
-      <p class="card-text">Es una novela distópica que sigue la vida de Winston Smith, un hombre que vive bajo el control totalitario del Partido en Oceanía. La historia se desarrolla en un futuro oscuro donde el gobierno manipula la información y la vigilancia es omnipresente. Orwell plantea temas como la opresión, la manipulación y la lucha por la libertad individual.</p>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7">Prestar</a>
-    </div>
-  </div>
+  ";
+}
+echo $html;
+?>
 
-  <div class="card border-primary mb-3 tarjetas" style="max-width: 18rem;">
-    <div class="card-header">Matar a un ruiseñor</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">Harper Lee</h5>
-      <p class="card-text">Ambientada en los años 30 en Alabama, Estados Unidos, "To Kill a Mockingbird" narra la historia a través de los ojos de Scout Finch, una niña que presencia la lucha contra el racismo y la injusticia en su comunidad. La novela aborda temas como el prejuicio racial, la empatía y la búsqueda de la justicia.</p>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7">Prestar</a>
-    </div>
-  </div>
-
-  <div class="card border-primary mb-3 tarjetas" style="max-width: 18rem;">
-    <div class="card-header">Orgullo y prejuicio</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">Jane Austen</h5>
-      <p class="card-text">Pride and Prejudice" es una obra clásica de la literatura inglesa que sigue la historia de Elizabeth Bennet y su complicada relación con el apuesto y enigmático Mr. Darcy. La novela retrata la sociedad y las normas sociales de la época, mientras aborda temas como el amor, el orgullo y los prejuicios.</p>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7">Prestar</a>
-    </div>
-  </div>
-
-  <div class="card border-primary mb-3 tarjetas" style="max-width: 18rem;">
-    <div class="card-header">El gran Gatsby</div>
-    <div class="card-body text-primary">
-      <h5 class="card-title">F. Scott Fitzgerald</h5>
-      <p class="card-text">Situada en la década de 1920 en Estados Unidos, "The Great Gatsby" es una obra maestra que examina la decadencia y la corrupción del sueño americano. A través de la mirada de Nick Carraway, el lector es testigo de la historia de Jay Gatsby, un enigmático millonario obsesionado con recuperar un amor perdido.</p>
-      <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal7">Prestar</a>
-    </div>
-  </div>
 </div>
 
 <!-- modal para prestar el libro -->
@@ -170,10 +166,10 @@
               </div>
               <div class="card-header mt-0">Disponibles: 5</div>
             </div>
-              <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal8">Prestar libro</button>
       </div>
-      <div class="modal-footer">
-      <a href="prestar.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
+      <div class="modal-footer justify-content-between">
+        <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#exampleModal8">Prestar libro</button>
+        <a href="prestar.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
         <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
       </div>
     </div>
@@ -214,8 +210,8 @@
                     </button>
 
                     <div class="collapse w-100" id="collapseExample">
-                      <div class="card card-body">
-                        <table class="table">
+                      <div class="card card-body p-1">
+                        <table class="table mb-0">
                           <thead>
                             <tr>
                               <th scope="col">Cedula</th>
@@ -239,8 +235,8 @@
                     </div>
 
                     <div class="form-group mt-2 w-100 mb-0">
-                      <label class="btn btn-dark text-white" for="mensaje">Observaciones:</label>
-                      <textarea class="form-control" id="mensaje" rows="4" placeholder="Escribe observaciones aqui"></textarea>
+                      <!-- <label class="btn btn-dark text-white" for="mensaje">Observaciones:</label> -->
+                      <textarea class="form-control" id="mensaje" rows="2" placeholder="Escribe observaciones aqui"></textarea>
                     </div>
 
                 </div>
@@ -250,10 +246,10 @@
               Haz clic para mostrar y ocultar el contenido
             </button> -->
             
-              <a href="prestamos.html"><button type="submit" class="btn btn-success">Enviar prestamo</button></a>
       </div>
-      <div class="modal-footer">
-      <a href="prestar.html"><button type="button" class="btn btn-dark">Cerrar</button></a>
+      <div class="modal-footer justify-content-between">
+        <a href="prestamos.php"><button type="submit" class="btn btn-success">Enviar prestamo</button></a>
+        <a href="prestar.php"><button type="button" class="btn btn-dark">Cerrar</button></a>
         <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
       </div>
     </div>

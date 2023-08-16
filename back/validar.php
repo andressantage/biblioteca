@@ -44,7 +44,7 @@ if ($result->num_rows === 1) {
     $_SESSION['nombre'] = $row['nombre'];
 
     // Redirigir al usuario a la página de bienvenida
-    header("Location: ../principal.php"); 
+    header("Location: ../usuarios.php"); 
     exit();
 } else {
     header("Location: ../index.html?error=1");

@@ -38,15 +38,18 @@ $result = mysqli_query($con, $existQuery);
 
 if (mysqli_num_rows($result) > 0) {
   // El usuario ya existe, mostrar mensaje de error
-  echo "El usuario ya existe"; //Revisar como se hara esta parte
+  echo "<script>alert('El usuario ya existe')</script>"; //Revisar como se hara esta parte
+  /* header("location: ../principal.php"); */
 } else {
   // Insertar el nuevo usuario en la base de datos
-  $UsuariosID = hash('sha256', $persona->llave);
-  $Cedula = hash('sha256', $persona->cedula);
-  $query = "INSERT INTO usuarios (UsuariosID, Nombre, Apellido, Correo, Cedula) VALUES ('$UsuariosID', '$persona->nombres', '$persona->apellidos', '$correo', '$Cedula')";
+  /* $UsuariosID = hash('sha256', $persona->llave);
+  $Cedula = hash('sha256', $persona->cedula); */
+  $UsuariosID =$persona->llave;
+  $Cedula = $persona->cedula;
+  $query = "INSERT INTO usuarios (UsuariosID, Nombre, Apellido, Correo, Cedula, Fecha) VALUES ('$UsuariosID', '$persona->nombres', '$persona->apellidos', '$correo', '$Cedula',NOW())";
 
   if (mysqli_query($con, $query)) {
-    header("location: ../principal.php");
+    header("location: ../usuarios.php");
   } else {
     echo "Error con el registro: " . mysqli_error($con);
   }

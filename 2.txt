@@ -1,0 +1,20 @@
+$(document).ready(function() {
+    $("#enviarDatos").click(function() {
+        var datos = {
+            clave: "valor",
+            otraClave: "otroValor"
+        };
+
+        $.ajax({
+            type: "POST",
+            url: "documento.php",
+            data: datos,
+            success: function(response) {
+                console.log(response); // Manejar la respuesta del servidor
+            },
+            error: function(xhr, status, error) {
+                console.error(error); // Manejar errores
+            }
+        });
+    });
+});

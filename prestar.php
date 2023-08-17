@@ -55,7 +55,6 @@
                    <!--  <div class="d-flex justify-content-lg-start align-item-center mt-2">
                         <a href="" class="m">¿Has olvidado tú contraseña?</a>
                     </div> -->
-
             </div>
             <div class="modal-footer justify-content-between">
               <button type="submit" class="btn btn-success">Registrar</button>
@@ -95,6 +94,9 @@
 <style>
   .tarjetas{
     margin: 10px;
+  }
+  .border-primary {
+    border-color: #ffc107 !important;
   }
 </style>
 
@@ -154,7 +156,7 @@ echo $html;
         </button>
       </div>
       <div class="modal-body">
-            <div class="card border-primary mb-3 tarjetas">
+            <div class="card border-primary mb-1 tarjetas">
               <div class="card-header">Libro: Cien años de soledad</div>
               <div class="card-header">Autor: Gabriel García Márquez</div>
               <div class="card-body text-primary py-1">

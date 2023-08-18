@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['correo'])){
+    header('Location: ../index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -123,11 +130,11 @@ foreach ($usuarios as $usuario) {
   $primerNombre = $nombreCompleto[0]; */
   $html .="
   <div class='card border-primary mb-3 tarjetas' style='max-width: 18rem;'>
-    <div class='card-header'>".$usuario['Autor']."</div>
+    <div class='card-header' id='a".$usuario['LibrosID']."'>".$usuario['Autor']."</div>
     <div class='card-body'>
-        <h5 class='card-title text-primary'>".$usuario['Titulo']."</h5>
+        <h5 class='card-title text-primary' id='b".$usuario['LibrosID']."'>".$usuario['Titulo']."</h5>
         <pre class='mb-0'>
-Disponibles: <h6 class='mb-0'>".$usuario['N_Disponible']."</h6>
+Disponibles: <h6 class='mb-0' id='c".$usuario['LibrosID']."'>".$usuario['N_Disponible']."</h6>
 N° ejemplares: ".$usuario['N_Ejemplares']."
 ID del libro: ".$usuario['LibrosID']."
 Clasificacion ID: ".$usuario['ClasificacionID']."
@@ -235,29 +242,42 @@ echo $html;
                         </table>
                       </div>
                     </div>
-
                     <div class="form-group mt-2 w-100 mb-0">
-                      <!-- <label class="btn btn-dark text-white" for="mensaje">Observaciones:</label> -->
                       <textarea class="form-control" id="mensaje" rows="2" placeholder="Escribe observaciones aqui"></textarea>
                     </div>
-
                 </div>
-              
             </div>
-            <!-- <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-              Haz clic para mostrar y ocultar el contenido
-            </button> -->
-            
       </div>
       <div class="modal-footer justify-content-between">
         <a href="prestamos.php"><button type="submit" class="btn btn-success">Enviar prestamo</button></a>
         <a href="prestar.php"><button type="button" class="btn btn-dark">Cerrar</button></a>
-        <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
       </div>
     </div>
   </div>
 </div>
 
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0/js/bootstrap.min.js"></script>
+<script>
+  let b = document.querySelectorAll('.prestamoEditar');
+    b.forEach((boton) => {
+        boton.addEventListener('click', (event) => {
+          console.log(boton.id)
+          let libro = document.querySelector('#libro');
+          let prestador = document.querySelector('#prestador');
+          let fecha_prestamo = document.querySelector('#fecha_prestamo');
+          let fecha_vencimiento = document.querySelector('#fecha_vencimiento');
+          // Obtén el modal por su ID
+          var modal = document.getElementById("exampleModal7");
+          // Crea una instancia del modal usando el constructor Modal de Bootstrap
+          var modalInstance = new bootstrap.Modal(modal);
+          // Activa el modal
+          modalInstance.show();
+          libro.value = document.getElementById('a' + boton.id).textContent;
+          prestador.value= document.getElementById('b' + boton.id).textContent;
+          fecha_prestamo.value= document.getElementById('c' + boton.id).textContent;
+          fecha_vencimiento.value= document.getElementById('d' + boton.id).textContent;
+          idd.value= boton.id;
+        });
+    });  
 </body>
 </html>

@@ -24,7 +24,7 @@ if(!isset($_SESSION['correo'])){
 <body>
 
 <?php
-  include("nav.php");
+include('nav.php');
 ?>
 
 <!-- modal para iniciar sesion -->

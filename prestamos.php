@@ -1,3 +1,10 @@
+<?php
+session_start();
+if(!isset($_SESSION['correo'])){
+    header('Location: ../index.html');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -52,15 +59,11 @@
                 <label for="llave">Llave del saber</label>
                 <input required type="number" class="form-control" name="llave" id="llave" placeholder="Ingresa llave del saber">
               </div>
-              <!--  <div class="d-flex justify-content-lg-start align-item-center mt-2">
-                  <a href="" class="m">¿Has olvidado tú contraseña?</a>
-              </div> -->
       </div>
       <div class="modal-footer justify-content-between">
         <button type="submit" class="btn btn-success">Registrar</button>
         </form>
         <a href="prestamos.php"><button type="button" class="btn btn-dark">Cerrar</button></a>
-        <!-- <button type="button" class="btn btn-success">Crear cuenta</button> -->
       </div>
     </div>
   </div>

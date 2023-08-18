@@ -42,6 +42,8 @@ if ($result->num_rows === 1) {
     $_SESSION['idUsuario'] = $row['id'];
     $_SESSION['correo'] = $row['email'];
     $_SESSION['nombre'] = $row['nombre'];
+    $_SESSION['apellido'] = $row['apellido'];
+    $_SESSION['password'] = $row['password'];
 
     // Redirigir al usuario a la página de bienvenida
     header("Location: ../usuarios.php"); 

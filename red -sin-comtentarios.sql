@@ -1,31 +1,6 @@
--- phpMyAdmin SQL Dump
--- version 5.2.1
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 16-08-2023 a las 20:50:28
--- Versión del servidor: 10.4.28-MariaDB
--- Versión de PHP: 8.2.4
-
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
-
---
--- Base de datos: `red`
---
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `administrador`
---
 
 CREATE TABLE `administrador` (
   `id` int(11) NOT NULL,
@@ -35,46 +10,23 @@ CREATE TABLE `administrador` (
   `password` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `administrador`
---
 
 INSERT INTO `administrador` (`id`, `nombre`, `apellido`, `email`, `password`) VALUES
 (1, 'Ximena', 'ssss', 'ximena@gmail.com', '123');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `biblioteca`
---
 
 CREATE TABLE `biblioteca` (
   `BibliotecaID` bigint(20) NOT NULL,
   `Descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `biblioteca`
---
-
 INSERT INTO `biblioteca` (`BibliotecaID`, `Descripcion`) VALUES
 (683070001001, 'BIBLIOTECA PÚBLICA MUNICIPAL DE GIRÓN'),
 (683070001002, 'BIBLIOTECA PÚBLICA MUNICIPAL GABRIEL GARCÍA MARQUEZ');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `clasificacion`
---
 
 CREATE TABLE `clasificacion` (
   `ClasificacionID` varchar(100) NOT NULL,
   `Descripcion` varchar(500) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `clasificacion`
---
 
 INSERT INTO `clasificacion` (`ClasificacionID`, `Descripcion`) VALUES
 ('000', 'Generalidades'),
@@ -195,30 +147,14 @@ INSERT INTO `clasificacion` (`ClasificacionID`, `Descripcion`) VALUES
 ('SB', 'Sistema Braille'),
 ('T', 'Teatro');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `codigobarras`
---
-
 CREATE TABLE `codigobarras` (
   `CodigoBarrasID` int(11) NOT NULL,
   `Descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `codigobarras`
---
-
 INSERT INTO `codigobarras` (`CodigoBarrasID`, `Descripcion`) VALUES
 (0, 'No tiene codigo de barras'),
 (1, 'Si tiene codigo de Barras');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `etiqueta`
---
 
 CREATE TABLE `etiqueta` (
   `EtiquetaID` int(11) NOT NULL,
@@ -226,20 +162,10 @@ CREATE TABLE `etiqueta` (
   `Descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `etiqueta`
---
-
 INSERT INTO `etiqueta` (`EtiquetaID`, `Color`, `Descripcion`) VALUES
 (0, 'Amarillo', 'Niños'),
 (1, 'Azul', 'Jóvenes'),
 (2, 'Rojo', 'Adultos');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `libros`
---
 
 CREATE TABLE `libros` (
   `LibrosID` varchar(100) NOT NULL,
@@ -257,10 +183,6 @@ CREATE TABLE `libros` (
   `SalaID` int(11) DEFAULT NULL,
   `Observacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `libros`
---
 
 INSERT INTO `libros` (`LibrosID`, `CodigoBarrasID`, `Titulo`, `Autor`, `ClasificacionID`, `CodigoClasificacion`, `Codigo_Autor`, `N_Ejemplares`, `OrigenID`, `N_Disponible`, `EtiquetaID`, `BibliotecaID`, `SalaID`, `Observacion`) VALUES
 ('               16.3', 1, 'PREGUNTARIO', 'JAIRO ANIBAL NIÑO', 'P', 'P NIÑ1', NULL, 1, 1, 1, 0, 683070001001, 2, ''),
@@ -2188,42 +2110,20 @@ INSERT INTO `libros` (`LibrosID`, `CodigoBarrasID`, `Titulo`, `Autor`, `Clasific
 ('9989580415309', 1, 'LA GATA QUE SE FUE PARA EL CIELO', 'ELIZABETH COATSWORTH ', 'N', 'N COA1', NULL, 1, 1, 1, 0, 683070001001, 2, ''),
 ('BNC-2021-14323', 1, ' LA PARTERIA HUMANIZADA', 'EUSTACIA RODRIGUEZ', '920', '926.18202 R62v', NULL, 1, 1, 1, 2, 683070001002, 1, '');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `librosconsulta`
---
-
 CREATE TABLE `librosconsulta` (
   `LibrosConsultaID` int(11) NOT NULL,
   `LibrosID` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `origen`
---
 
 CREATE TABLE `origen` (
   `OrigenID` int(11) NOT NULL,
   `Donado_por` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `origen`
---
-
 INSERT INTO `origen` (`OrigenID`, `Donado_por`) VALUES
 (0, 'No se sabe'),
 (1, 'Estado'),
 (2, 'Particular');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `prestamos`
---
 
 CREATE TABLE `prestamos` (
   `PrestamosID` int(11) NOT NULL,
@@ -2232,22 +2132,12 @@ CREATE TABLE `prestamos` (
   `Fecha_Prestamo` int(11) DEFAULT NULL,
   `Fecha_Limite` int(11) DEFAULT NULL,
   `Estado` int(11) DEFAULT NULL,
-  `Observacion` varchar(100) DEFAULT NULL
+  `Obervacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `prueba`
---
 
 CREATE TABLE `prueba` (
   `nombre` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Volcado de datos para la tabla `prueba`
---
 
 INSERT INTO `prueba` (`nombre`) VALUES
 (''),
@@ -2281,30 +2171,14 @@ INSERT INTO `prueba` (`nombre`) VALUES
 ('Como estas?'),
 ('Yo bien y tu?');
 
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `sala`
---
-
 CREATE TABLE `sala` (
   `SalaID` int(11) NOT NULL,
   `Descripcion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `sala`
---
-
 INSERT INTO `sala` (`SalaID`, `Descripcion`) VALUES
 (1, 'Sala General'),
 (2, 'Sala Ludoteca');
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `usuarios`
---
 
 CREATE TABLE `usuarios` (
   `UsuariosID` varchar(100) NOT NULL,
@@ -2315,53 +2189,26 @@ CREATE TABLE `usuarios` (
   `Fecha` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Volcado de datos para la tabla `usuarios`
---
-
 INSERT INTO `usuarios` (`UsuariosID`, `Nombre`, `Apellido`, `Correo`, `Cedula`, `Fecha`) VALUES
 ('', '', '', '', '', '2023-08-16 11:40:56'),
 ('3434', 'erer', 'dfdf', 'ximena@gmail.com', '3434', '2023-08-16 11:44:34'),
 ('2323', 'Andres', 'sdsd', 'casgereda.1@gmail.com', '2323', '2023-08-16 11:50:09'),
 ('32323', '2323', 'ewewe', 'f@xn--gmai-jqa.com', '2323', '2023-08-16 13:50:04');
 
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `administrador`
---
 ALTER TABLE `administrador`
   ADD PRIMARY KEY (`id`);
 
---
--- Indices de la tabla `biblioteca`
---
 ALTER TABLE `biblioteca`
   ADD PRIMARY KEY (`BibliotecaID`);
-
---
--- Indices de la tabla `clasificacion`
---
 ALTER TABLE `clasificacion`
   ADD PRIMARY KEY (`ClasificacionID`);
 
---
--- Indices de la tabla `codigobarras`
---
 ALTER TABLE `codigobarras`
   ADD PRIMARY KEY (`CodigoBarrasID`);
 
---
--- Indices de la tabla `etiqueta`
---
 ALTER TABLE `etiqueta`
   ADD PRIMARY KEY (`EtiquetaID`);
 
---
--- Indices de la tabla `libros`
---
 ALTER TABLE `libros`
   ADD PRIMARY KEY (`LibrosID`),
   ADD KEY `EtiquetaID` (`EtiquetaID`),
@@ -2371,56 +2218,27 @@ ALTER TABLE `libros`
   ADD KEY `SalaID` (`SalaID`),
   ADD KEY `CodigoBarrasID` (`CodigoBarrasID`);
 
---
--- Indices de la tabla `librosconsulta`
---
 ALTER TABLE `librosconsulta`
   ADD PRIMARY KEY (`LibrosConsultaID`),
   ADD KEY `LibrosID` (`LibrosID`);
 
---
--- Indices de la tabla `origen`
---
 ALTER TABLE `origen`
   ADD PRIMARY KEY (`OrigenID`);
 
---
--- Indices de la tabla `prestamos`
---
 ALTER TABLE `prestamos`
   ADD PRIMARY KEY (`PrestamosID`),
   ADD KEY `UsuariosID` (`UsuariosID`),
   ADD KEY `LibrosID` (`LibrosID`);
 
---
--- Indices de la tabla `sala`
---
 ALTER TABLE `sala`
   ADD PRIMARY KEY (`SalaID`);
 
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `administrador`
---
 ALTER TABLE `administrador`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
---
--- AUTO_INCREMENT de la tabla `librosconsulta`
---
 ALTER TABLE `librosconsulta`
   MODIFY `LibrosConsultaID` int(11) NOT NULL AUTO_INCREMENT;
 
---
--- AUTO_INCREMENT de la tabla `prestamos`
---
 ALTER TABLE `prestamos`
   MODIFY `PrestamosID` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

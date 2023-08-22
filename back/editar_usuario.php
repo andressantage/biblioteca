@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($con->query($sql) === TRUE) {
         header("Location: ../usuarios.php");
     } else {
-        echo "Error al actualizar el producto: " . $conn->error;
+        echo "Error al actualizar el producto: " . $con->error;
     }
 
     $con->close();

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['correo'])){
-    header('Location: ../index.html');
+    header('Location: index.html');
     exit;
 }
     header("Access-Control-Allow-Origin: *");

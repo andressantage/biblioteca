@@ -2232,7 +2232,7 @@ CREATE TABLE `prestamos` (
   `Fecha_Prestamo` int(11) DEFAULT NULL,
   `Fecha_Limite` int(11) DEFAULT NULL,
   `Estado` int(11) DEFAULT NULL,
-  `Observacion` varchar(100) DEFAULT NULL
+  `Obervacion` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

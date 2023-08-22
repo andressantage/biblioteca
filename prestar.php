@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['correo'])){
-    header('Location: ../index.html');
+    header('Location: index.html');
     exit;
 }
 ?>
@@ -72,6 +72,7 @@ if(!isset($_SESSION['correo'])){
           </div>
         </div>
 </div>
+
 <!-- seccion buscador -->
 <div class="container mt-4">
     <div class="row d-flex justify-content-center">
@@ -86,7 +87,7 @@ if(!isset($_SESSION['correo'])){
             <option value="opcion4">Codigo de clasificacion</option>
         </select>
             <input style="width: 200px;" id="buscarImagen" type="search" class="form-control" placeholder="Buscar..." name="busqueda">
-            <button class="btn btn-dark" id="buscar" type="button">
+            <button class="btn btn-dark" id="buscar" type="submit">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                 <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
             </svg>
@@ -109,7 +110,6 @@ if(!isset($_SESSION['correo'])){
 <!-- muestra tarjetas de libros -->
 <div id="api" class="contenedor row d-flex justify-content-center align-items-center">
 
-
 <?php
 include("back/conexion.php");
 $con=conectar();
@@ -118,41 +118,47 @@ if (mysqli_connect_errno()) {
   exit();
 }
 
-
-
 if(isset($_GET['busqueda'])){
   $busqueda= $_GET['busqueda'];
-
-  $consultaBuscador = "SELECT * FROM libros WHERE titulo LIKE '%$busqueda%' ";
+  if($_GET['opcion']=='opcion1'){
+    $consultaBuscador = "SELECT * FROM libros WHERE titulo LIKE '%$busqueda%' ";
+  }elseif($_GET['opcion']=='opcion2'){
+    $consultaBuscador = "SELECT * FROM libros WHERE Autor LIKE '%$busqueda%' ";
+  }elseif($_GET['opcion']=='opcion3'){
+    $consultaBuscador = "SELECT * FROM libros WHERE CodigoBarrasID LIKE '%$busqueda%' ";
+  }elseif($_GET['opcion']=='opcion4'){
+    $consultaBuscador = "SELECT * FROM libros WHERE CodigoClasificacion LIKE '%$busqueda%' ";
+  }else{
+    $consultaBuscador = "SELECT * FROM libros";
+  }
   $resultBuscador = mysqli_query($con, $consultaBuscador);
-  
   $usuarios = $resultBuscador->fetch_all(MYSQLI_ASSOC);
 }else{
- $consulta = "SELECT * FROM libros";
- $resultado = mysqli_query($con, $consulta);
- $usuarios = $resultado->fetch_all(MYSQLI_ASSOC);
+  $consulta = "SELECT * FROM libros";
+  $resultado = mysqli_query($con, $consulta);
+  $usuarios = $resultado->fetch_all(MYSQLI_ASSOC);
 }
 
 foreach ($usuarios as $usuario) {  ?>
-
 <div class='card border-primary mb-3 tarjetas' style='max-width: 18rem;'>
- <div class='card-header'><?=$usuario['Autor']?></div>
- <div class='card-body'>
-     <h5 class='card-title text-primary'><?=$usuario['Titulo']?></h5>
-     <p> Disponibles: <h6 class='mb-0'><?=$usuario['N_Disponible']?></h6></p>
-     <p> N° ejemplares: <?=$usuario['N_Ejemplares']?></p>
-     <p> ID del libro: <?=$usuario['LibrosID']?> </p>
-     <p> Clasificacion ID: <?= $usuario['ClasificacionID']?></p>
-     <p>Codigo de clasificacion: <?= $usuario['CodigoClasificacion'] ?></p>
-     <p>Biblioteca:<?=$usuario['BibliotecaID']?></p>
-     <p>Sala: <?=$usuario['SalaID']?></p>
-     <a href="#" class='btn btn-primary' data-toggle='modal' data-target='#exampleModal7'>Prestar</a>
- </div>
+  <div class='card-header'><?=$usuario['Autor']?></div>
+  <div class='card-body'>
+      <h5 class='card-title text-primary'><?=$usuario['Titulo']?></h5>
+      <p> Disponibles: <h6 class='mb-0'><?=$usuario['N_Disponible']?></h6></p>
+      <p> N° ejemplares: <?=$usuario['N_Ejemplares']?></p>
+      <p> ID del libro: <?=$usuario['LibrosID']?> </p>
+      <p> Clasificacion ID: <?= $usuario['ClasificacionID']?></p>
+      <p>Codigo de clasificacion: <?= $usuario['CodigoClasificacion'] ?></p>
+      <p>Biblioteca:<?=$usuario['BibliotecaID']?></p>
+      <p>Sala: <?=$usuario['SalaID']?></p>
+      <button class='btn btn-primary prestamoLibro' id='<?=$usuario['LibrosID']?>'>Prestar</button>
+  </div>
 </div>
 <?php }?>
 </div>
 
 <!-- modal registrar a usuario con prestamo -->
+<form  action="registrar_prestamo.php" method="post">
 <div class="modal fade" id="exampleModal7" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog mt-0 mb-2 h-100 d-flex justify-content-center align-items-center" role="document">
     <div class="modal-content contenidoModal">
@@ -177,13 +183,13 @@ foreach ($usuarios as $usuario) {  ?>
             <div class="d-flex justify-content-center">
                 <div class="input-group mb-3">
                   <button class="btn btn-dark" id="buscar" type="button">Cedula:</button>
-                    <input style="width: 200px;" id="buscarUsuarioCedula" type="number" class="form-control" placeholder="Buscar...">
+                    <input style="width: 200px;" id="buscarUsuarioCedula" type="number" name='cedulaUsuario' class="form-control" placeholder="Buscar...">
                     <button class="btn btn-dark" id="buscarUsuarioPrestamo" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-                    </svg>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                          <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                      </svg>
                     </button>
-
+                    
                     <div class="collapse w-100" id="collapseExample">
                       <div class="card card-body p-1">
                         <table class="table mb-0">
@@ -209,18 +215,21 @@ foreach ($usuarios as $usuario) {  ?>
                       </div>
                     </div>
                     <div class="form-group mt-2 w-100 mb-0">
-                      <textarea class="form-control" id="mensaje" rows="2" placeholder="Escribe observaciones aqui"></textarea>
+                      <textarea class="form-control" name='observaciones' id="mensaje" rows="2" placeholder="Escribe observaciones aqui"></textarea>
                     </div>
                 </div>
             </div>
       </div>
       <div class="modal-footer justify-content-between">
-        <a href="prestamos.php"><button type="submit" class="btn btn-success">Enviar prestamo</button></a>
+        <button type="submit" class="btn btn-success">Enviar prestamo</button>
         <a href="prestar.php"><button type="button" class="btn btn-dark">Cerrar</button></a>
       </div>
     </div>
   </div>
 </div>
+
+<input type="hidden" name="libroID" id="datoLibroID">
+</form>
 
 <form id="hiddenForm" action="libros.php" method="post" style="display:none;">
   <input type="hidden" name="libro" id="hiddenDato">
@@ -250,6 +259,7 @@ fetch("http://localhost/bibli/libros.php")
     for (let i = 0; i < data.length; i++) {
       // Supongo que tienes un botón con una propiedad 'id'
       if (data[i].LibrosID === boton.id) {
+        document.getElementById('datoLibroID').value=data[i].LibrosID
         document.getElementById('m1').textContent='Libro: '+data[i].Titulo
         document.getElementById('m2').textContent='Autor: '+data[i].Autor
         document.getElementById('m3').textContent='Sala: '+data[i].SalaID
@@ -262,9 +272,9 @@ fetch("http://localhost/bibli/libros.php")
   })
   .catch((error) => {
     console.error("Error al obtener los datos:", error);
+    });
   });
-        });
-    });  
+  });  
 
 let buscarUsuarioPrestamo=document.getElementById('buscarUsuarioPrestamo')
 buscarUsuarioPrestamo.addEventListener('click', (event) => {
@@ -285,11 +295,11 @@ buscarUsuarioPrestamo.addEventListener('click', (event) => {
         console.log(data[i])
         let busquedaUsuario=document.getElementById('busquedaUsuario')
         busquedaUsuario.innerHTML=`
-        <th scope="row">${data[i].Cedula}</th>
+        <th id='cedulaPrestamo' scope="row">${data[i].Cedula}</th>
         <td>${data[i].Nombre}</td>
         <td>${data[i].Apellido}</td>
         <td>${data[i].UsuariosID}</td>
-        <td class="text-center"><input type="radio"></td>
+        <td class="text-center"><input name='confirmar' value='1' type="radio"></td>
         `
       }else{
         let busquedaUsuario=document.getElementById('busquedaUsuario')
@@ -298,7 +308,7 @@ buscarUsuarioPrestamo.addEventListener('click', (event) => {
         <td></td>
         <td></td>
         <td></td>
-        <td class="text-center"><input type="radio"></td>
+        <td class="text-center"><input name='confirmar' value='0' type="radio"></td>
         `
       }
     }
@@ -307,7 +317,7 @@ buscarUsuarioPrestamo.addEventListener('click', (event) => {
     console.error("Error al obtener los datos:", error);
   });
 });
-
 </script>
+<div id="ultimo"></div>
 </body>
 </html>

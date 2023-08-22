@@ -18,6 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Consulta SQL para actualizar el producto
     $sql = "UPDATE administrador SET nombre = '$nombre', apellido = '$apellido', email='$email', password='$password' WHERE id = 1";
     if ($con->query($sql) === TRUE) {
+        $_SESSION['nombre']=$nombre;
         header("Location: ../usuarios.php");
     } else {
         echo "Error al actualizar el producto: " . $conn->error;

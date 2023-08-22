@@ -23,7 +23,7 @@
         </li>
         </ul>
         <!-- cambiar esta parte para que se inice sesion y en caso de haber iniciado sesion lo dirija a las instrucciones para hacer fecth API -->
-        <button type='button' class='nav-link  ml-auto btn btn-success'  data-toggle='modal' data-target='#exampleModal10'><?php echo $_SESSION['nombre']; ?></button>
+        <button type='button' class='nav-link  ml-auto btn btn-success'  data-toggle='modal' data-target='#exampleModal10'><?=  $_SESSION['nombre']; ?></button>
         <img src='imagenperfil.png' class='ml-2 imgLogo' alt=''>
     </div>
 </nav>
@@ -67,7 +67,7 @@
               </div>
               <div class="form-group  text-white">
                 <label for="apellido">Apellidos</label>
-                <input required type="text" class="form-control" name="apellido" id="apellido" value="<?= $_SESSION['apellido'] ?>" required>
+                <input required type="text" class="form-control" name="apellido" id="apellido" value="<?php echo $_SESSION['apellido']; ?>" required>
               </div>
               <div class="form-group  text-white">
                 <label for="email">Correo electrónico</label>

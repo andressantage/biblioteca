@@ -1,9 +1,9 @@
 <?php
     function conectar(){
-        $host="localhost";
-        $user="id21133492_localhost";
-        $pass="H1*h12345678";
-        $cont="id21133492_biblioteca";
+        $host="";
+        $user="";
+        $pass="";
+        $cont="";
 
         $con=mysqli_connect($host,$user,$pass);
 
